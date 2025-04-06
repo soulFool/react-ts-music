@@ -3,12 +3,11 @@ import { useRef, useEffect, useState } from "react";
 import BScroll from "@better-scroll/core";
 import Slide from "@better-scroll/slide";
 
-// 注册插件, 不是写 hooks
 // eslint-disable-next-line react-hooks/rules-of-hooks
-BScroll.use(Slide);
+BScroll.use(Slide); // 注册插件 Slide
 
-export default function useSlider(
-  wrapperRef: RefObject<HTMLDivElement | null>
+export default function useSlider<T extends HTMLElement>(
+  wrapperRef: RefObject<T | null>
 ) {
   const slider = useRef<BScroll | null>(null);
 
