@@ -2,6 +2,7 @@ import { useRequest } from "ahooks";
 import { getRecommend } from "@/service/recommend";
 import Slider from "@/components/base/slider";
 import Scroll from "@/components/base/scroll";
+import LazyImage from "@/components/base/lazyImage";
 
 const Recommend = () => {
   const { data: recommendList } = useRequest(getRecommend);
@@ -28,7 +29,7 @@ const Recommend = () => {
                   className="flex box-border items-center p-10 pt-0"
                 >
                   <div className="flex-basis-30 w-30 pr-10">
-                    <img width={60} height={60} src={item.pic} />
+                    <LazyImage width={60} height={60} src={item.pic} />
                   </div>
                   <div className="flex flex-col justify-center flex-1 lh-10 overflow-hidden text-7">
                     <h2 className="mb-5 text-text-primary">{item.username}</h2>
