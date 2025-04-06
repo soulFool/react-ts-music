@@ -1,6 +1,6 @@
 export type Props = { title?: string };
 
-const Loading = ({ title = '加载中...' }: Props) => {
+const Loading = ({ title = '正在载入...' }: Props) => {
   return (
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 translate-z-0">
       <div className="text-center">

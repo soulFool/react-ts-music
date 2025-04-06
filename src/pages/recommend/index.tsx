@@ -9,9 +9,9 @@ import useDynamicLoading from '@/hooks/useDynamicLoading.tsx'
 const Recommend = () => {
   const loadingRef = useRef<HTMLDivElement>(null)
 
-  const { data: recommendList, loading: recommendLoading } = useRequest(getRecommend);
+  const { data: recommendList, loading: recommendListLoading } = useRequest(getRecommend);
 
-  useDynamicLoading(loadingRef, recommendLoading, { title: '正在载入中...' })
+  useDynamicLoading(loadingRef, recommendListLoading)
 
   return (
     <div ref={loadingRef} className="fixed w-full top-44 bottom-0">
