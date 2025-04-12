@@ -34,4 +34,6 @@ export default function useScroll<T extends HTMLElement>(
       scroll.current?.destroy();
     };
   }, []);
+
+  return scroll;
 }

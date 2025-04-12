@@ -12,16 +12,20 @@ export default function useFixed(data: ISingerGroup[]) {
   const distance = useRef(0);
 
   const [fixedTitle, setFixedTitle] = useState("");
-  const [fixedStyle, setFixedStyle] = useState({});
+  const fixedElRef = useRef<HTMLDivElement>(null);
 
   const getFixedStyle = () => {
+    if (!fixedElRef.current) return
+
     const diff =
       distance.current > 0 && distance.current < TITLE_HEIGHT
         ? distance.current - TITLE_HEIGHT
         : 0;
-    setFixedStyle({
-      transform: `translate3d(0, ${diff}px, 0)`,
-    });
+
+    fixedElRef.current.style.transform = `translate3d(0, ${diff}px, 0)`;
+    // setFixedStyle({
+    //   transform: `translate3d(0, ${diff}px, 0)`,
+    // });
   };
 
   // 将滚动逻辑抽离成独立函数
@@ -48,7 +52,6 @@ export default function useFixed(data: ISingerGroup[]) {
         if (newTitle !== fixedTitleRef.current) {
           fixedTitleRef.current = newTitle;
           setFixedTitle(fixedTitleRef.current);
-          break;
         }
       }
     }
@@ -80,12 +83,14 @@ export default function useFixed(data: ISingerGroup[]) {
   // 组件挂载后，计算一次
   useEffect(() => {
     calculate();
-  }, [data]);
+  }, []);
 
   return {
     groupRef,
-    onScroll,
     fixedTitle,
-    fixedStyle,
+    fixedElRef,
+    currentIndex,
+
+    onScroll,
   };
 }
