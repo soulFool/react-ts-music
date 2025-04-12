@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function useShortcut(
   data: ISingerGroup[],
-  groupRef: React.RefObject<HTMLUListElement | null>
+  groupElRef: React.RefObject<HTMLUListElement | null>
 ) {
   const ANCHOR_HEIGHT = 18;
 
@@ -37,7 +37,7 @@ export default function useShortcut(
   function scrollTo(index: number) {
     if (isNaN(index)) return;
     index = Math.max(0, Math.min(shortcutList.length - 1, index));
-    const targetEl = groupRef.current!.children[index] as HTMLElement;
+    const targetEl = groupElRef.current!.children[index] as HTMLElement;
     (scrollRef.current!.scroll() as BScroll).scrollToElement(targetEl, 0, 0, 0);
   }
 

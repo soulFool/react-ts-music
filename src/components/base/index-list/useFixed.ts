@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 export default function useFixed(data: ISingerGroup[]) {
   const TITLE_HEIGHT = 30;
 
-  const groupRef = useRef<HTMLUListElement>(null);
+  const groupElRef = useRef<HTMLUListElement>(null);
   const listHeights = useRef<number[]>([]);
   const scrollY = useRef<number>(0);
   const currentIndex = useRef<number>(0);
@@ -64,7 +64,7 @@ export default function useFixed(data: ISingerGroup[]) {
   }
 
   function calculate() {
-    const group = groupRef.current;
+    const group = groupElRef.current;
 
     if (!group) return;
 
@@ -86,7 +86,7 @@ export default function useFixed(data: ISingerGroup[]) {
   }, []);
 
   return {
-    groupRef,
+    groupElRef,
     fixedTitle,
     fixedElRef,
     currentIndex,

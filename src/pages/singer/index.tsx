@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useRequest } from "ahooks";
 import { getSingerList } from "@/service/singer";
 import useDynamicLoading from "@/hooks/useDynamicLoading";
-import IndexList from "@/components/base/indexList";
+import IndexList from "@/components/base/index-list";
 
 const Singer = () => {
   const navigate = useNavigate()

@@ -8,7 +8,7 @@ type Props = PropsWithChildren & {
   className?: string;
   options?: Options;
   onScroll?: (pos: { x: number; y: number }) => void;
-  ref?: Ref<BScroll>;
+  ref?: Ref<{ scroll: () => BScroll | null }>;
 };
 
 const defaultOptions = {
@@ -23,19 +23,19 @@ const Scroll = ({
   children,
   onScroll,
 }: Props) => {
-  const rootRef = useRef<HTMLDivElement | null>(null);
+  const rootElRef = useRef<HTMLDivElement | null>(null);
   const scroll = useScroll(
-    rootRef,
+    rootElRef,
     { ...defaultOptions, ...options },
     onScroll
   ); // 合并默认选项和传入的选项
 
   useImperativeHandle(ref, () => ({
-    scroll: () => scroll.current,
-  }))
+    scroll: () => scroll.current
+  }));
 
   return (
-    <div ref={rootRef} className={className}>
+    <div ref={rootElRef} className={className}>
       {children}
     </div>
   );

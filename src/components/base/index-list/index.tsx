@@ -1,5 +1,5 @@
 import type { ISingerGroup, ISingerGroupItem } from "@/service/type";
-import LazyImage from "../lazyImage";
+import LazyImage from "../lazy-image";
 import Scroll from "../scroll";
 import useFixed from "./useFixed";
 import useShortcut from "./useShortcut";
@@ -10,10 +10,10 @@ type Props = {
 };
 
 const IndexList = ({ data, onSelect }: Props) => {
-  const { groupRef, currentIndex, fixedTitle, fixedElRef, onScroll } =
+  const { groupElRef, currentIndex, fixedTitle, fixedElRef, onScroll } =
     useFixed(data);
   const { scrollRef, shortcutList, onShortcutTouchStart, onShortcutTouchMove } =
-    useShortcut(data, groupRef);
+    useShortcut(data, groupElRef);
 
   function onItemClick(item: ISingerGroupItem) {
     onSelect(item);
@@ -26,7 +26,7 @@ const IndexList = ({ data, onSelect }: Props) => {
       options={{ probeType: 3 }}
       onScroll={onScroll}
     >
-      <ul ref={groupRef}>
+      <ul ref={groupElRef}>
         {data.map((group) => (
           <li key={group.title} className="pb-15">
             <h2 className="h-15 lh-15 pl-10 text-6 text-text-l bg-highlight-bg">

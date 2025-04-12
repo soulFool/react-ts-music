@@ -6,12 +6,12 @@ type Props = {
 };
 
 const Slider = ({ sliders }: Props) => {
-  const rootRef = useRef<HTMLDivElement | null>(null);
+  const rootElRef = useRef<HTMLDivElement | null>(null);
 
-  const { currentPageIndex } = useSlider(rootRef);
+  const { currentPageIndex } = useSlider(rootElRef);
 
   return (
-    <div ref={rootRef} className="min-h-[1px] text-0 touch-pan-y">
+    <div ref={rootElRef} className="min-h-[1px] text-0 touch-pan-y">
       <div className="relative overflow-hidden whitespace-nowrap">
         {sliders.map((item) => (
           <div

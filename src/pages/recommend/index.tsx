@@ -2,7 +2,7 @@ import { useRequest } from "ahooks";
 import { getRecommend } from "@/service/recommend";
 import Slider from "@/components/base/slider";
 import Scroll from "@/components/base/scroll";
-import LazyImage from "@/components/base/lazyImage";
+import LazyImage from "@/components/base/lazy-image";
 import useDynamicLoading from '@/hooks/useDynamicLoading.tsx'
 
 const Recommend = () => {
