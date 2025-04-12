@@ -1,17 +1,18 @@
-import type { RefObject } from 'react'
 import type { Props as LoadingProps } from '@/components/base/loading'
 import { createRoot } from 'react-dom/client';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Loading from '@/components/base/loading'
 import { addClass, removeClass } from '@/assets/ts/dom'
 
-export default function useDynamicLoading(parentRef: RefObject<HTMLElement | null>, isLoading: boolean, loadingProps?: LoadingProps) {
-  useEffect(() => {
-    if (!parentRef.current) return;
+export default function useDynamicLoading<T extends HTMLElement>(isLoading: boolean, loadingProps?: LoadingProps) {
+  const loadingRef = useRef<T>(null)
 
-    const style = getComputedStyle(parentRef.current);
+  useEffect(() => {
+    if (!loadingRef.current) return;
+
+    const style = getComputedStyle(loadingRef.current);
     if (['fixed', 'absolute', 'relative'].indexOf(style.position) === -1) {
-      addClass(parentRef.current, 'relative');
+      addClass(loadingRef.current, 'relative');
     }
 
     const container = document.createElement('div');
@@ -20,15 +21,17 @@ export default function useDynamicLoading(parentRef: RefObject<HTMLElement | nul
     root.render(<Loading {...loadingProps} />);
 
     if (isLoading) {
-      parentRef.current.appendChild(container);
+      loadingRef.current.appendChild(container);
     }
 
     return () => {
-      if (parentRef.current) {
-        removeClass(parentRef.current, 'relative');        
+      if (loadingRef.current) {
+        removeClass(loadingRef.current, 'relative');        
       }
       root.unmount();
       container.remove();
     };
-  }, [isLoading, parentRef]);
+  }, [isLoading]);
+
+  return loadingRef;
 }

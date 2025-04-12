@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useRequest } from "ahooks";
 import { getRecommend } from "@/service/recommend";
 import Slider from "@/components/base/slider";
@@ -7,11 +6,10 @@ import LazyImage from "@/components/base/lazyImage";
 import useDynamicLoading from '@/hooks/useDynamicLoading.tsx'
 
 const Recommend = () => {
-  const loadingRef = useRef<HTMLDivElement>(null)
 
   const { data: recommendList, loading: recommendListLoading } = useRequest(getRecommend);
 
-  useDynamicLoading(loadingRef, recommendListLoading)
+  const loadingRef = useDynamicLoading<HTMLDivElement>(recommendListLoading)
 
   return (
     <div ref={loadingRef} className="fixed w-full top-44 bottom-0">
