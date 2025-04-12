@@ -1,4 +1,4 @@
-import type { ISingerGroup } from "@/service/type";
+import type { ISingerGroup, ISingerGroupItem } from "@/service/type";
 import LazyImage from "../lazyImage";
 import Scroll from "../scroll";
 import useFixed from "./useFixed";
@@ -6,11 +6,18 @@ import useShortcut from "./useShortcut";
 
 type Props = {
   data: ISingerGroup[];
+  onSelect: (item: ISingerGroupItem) => void;
 };
 
-const IndexList = ({ data }: Props) => {
-  const { groupRef, currentIndex, fixedTitle, fixedElRef, onScroll } = useFixed(data);
-  const { scrollRef, shortcutList, onShortcutTouchStart, onShortcutTouchMove } = useShortcut(data, groupRef)
+const IndexList = ({ data, onSelect }: Props) => {
+  const { groupRef, currentIndex, fixedTitle, fixedElRef, onScroll } =
+    useFixed(data);
+  const { scrollRef, shortcutList, onShortcutTouchStart, onShortcutTouchMove } =
+    useShortcut(data, groupRef);
+
+  function onItemClick(item: ISingerGroupItem) {
+    onSelect(item);
+  }
 
   return (
     <Scroll
@@ -27,7 +34,13 @@ const IndexList = ({ data }: Props) => {
             </h2>
             <ul>
               {group.list.map((item) => (
-                <li key={item.id} className="flex items-center pt-10 pl-15">
+                <li
+                  key={item.id}
+                  className="flex items-center pt-10 pl-15"
+                  onClick={() => {
+                    onItemClick(item);
+                  }}
+                >
                   <LazyImage
                     src={item.pic}
                     width={50}
@@ -48,24 +61,31 @@ const IndexList = ({ data }: Props) => {
           </div>
         </div>
       )}
-      <div className="absolute right-2 top-1/2 -translate-y-1/2 w-10 py-10 rounded-[10px] text-center bg-bg-d font-[Helvetica]"
+      <div
+        className="absolute right-2 top-1/2 -translate-y-1/2 w-10 py-10 rounded-[10px] text-center bg-bg-d font-[Helvetica]"
         onTouchStart={(e) => {
-          e.stopPropagation()
-          e.preventDefault()
-          onShortcutTouchStart(e)
+          e.stopPropagation();
+          e.preventDefault();
+          onShortcutTouchStart(e);
         }}
         onTouchMove={(e) => {
-          e.stopPropagation()
-          e.preventDefault()
-          onShortcutTouchMove(e)
+          e.stopPropagation();
+          e.preventDefault();
+          onShortcutTouchMove(e);
         }}
       >
         <ul>
-          {
-            shortcutList.map((item, index) => (
-              <li key={item} className={`${currentIndex.current === index && 'text-theme'} p-[3px] lh-[1.5rem] text-text-l text-2xl`} data-index={index}>{item}</li>
-            ))
-          }
+          {shortcutList.map((item, index) => (
+            <li
+              key={item}
+              className={`${
+                currentIndex.current === index && "text-theme"
+              } p-[3px] lh-[1.5rem] text-text-l text-2xl`}
+              data-index={index}
+            >
+              {item}
+            </li>
+          ))}
         </ul>
       </div>
     </Scroll>

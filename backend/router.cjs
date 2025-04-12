@@ -373,7 +373,8 @@ function registerSingerDetail(app) {
 // 因为歌曲的 url 每天都在变化，所以需要单独的接口根据歌曲的 mid 获取
 function registerSongsUrl(app) {
   app.get("/api/getSongsUrl", (req, res) => {
-    const mid = req.query.mid;
+    const key = Object.keys(req.query).find(item => item.includes('mid'));
+    const mid = req.query[key].flat();
 
     let midGroup = [];
     // 第三方接口只支持最多处理 100 条数据，所以如果超过 100 条数据，我们要把数据按每组 100 条切割，发送多个请求
@@ -417,7 +418,7 @@ function registerSongsUrl(app) {
       const url = `https://u.y.qq.com/cgi-bin/musics.fcg?_=${getRandomVal()}&sign=${sign}`;
 
       // 发送 post 请求
-      return post(url, data).then((response) => {
+      return post(url, JSON.stringify(data)).then((response) => {
         const data = response.data;
         if (data.code === ERR_OK) {
           const midInfo = data.req_0.data.midurlinfo;

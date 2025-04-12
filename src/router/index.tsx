@@ -18,6 +18,12 @@ const routes: RouteObject[] = [
       {
         path: "/singer",
         Component: lazy(() => import("@/pages/singer")),
+        children: [
+          {
+            path: ":id",
+            Component: lazy(() => import("@/pages/singer-detail")),
+          },
+        ],
       },
       {
         path: "/top-list",
