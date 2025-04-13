@@ -8,7 +8,10 @@ export default function useShortcut(
 ) {
   const ANCHOR_HEIGHT = 18;
 
-  const scrollRef = useRef<BScroll>(null);
+  const scrollRef = useRef<{
+    root: HTMLDivElement | null;
+    scroll: () => BScroll | null;
+  }>(null);
   const touchRef = useRef({
     y1: 0,
     y2: 0,

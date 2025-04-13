@@ -6,9 +6,12 @@ import useScroll from "./useScroll";
 
 type Props = PropsWithChildren & {
   className?: string;
+  style?: React.CSSProperties;
   options?: Options;
   onScroll?: (pos: { x: number; y: number }) => void;
-  ref?: Ref<{ scroll: () => BScroll | null }>;
+  ref?: Ref<{ 
+    root: HTMLDivElement | null;
+    scroll: () => BScroll | null }>;
 };
 
 const defaultOptions = {
@@ -19,6 +22,7 @@ const defaultOptions = {
 const Scroll = ({
   ref,
   className = "",
+  style = {},
   options = {}, // 改为空对象
   children,
   onScroll,
@@ -31,11 +35,12 @@ const Scroll = ({
   ); // 合并默认选项和传入的选项
 
   useImperativeHandle(ref, () => ({
+    root: rootElRef.current,
     scroll: () => scroll.current
   }));
 
   return (
-    <div ref={rootElRef} className={className}>
+    <div ref={rootElRef} className={className} style={style}>
       {children}
     </div>
   );

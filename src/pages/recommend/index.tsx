@@ -1,3 +1,4 @@
+import type { RefObject } from "react";
 import { useRequest } from "ahooks";
 import { getRecommend } from "@/service/recommend";
 import Slider from "@/components/base/slider";
@@ -12,7 +13,7 @@ const Recommend = () => {
   const loadingRef = useDynamicLoading<HTMLDivElement>(recommendListLoading)
 
   return (
-    <div ref={loadingRef} className="fixed w-full top-44 bottom-0">
+    <div ref={loadingRef as RefObject<HTMLDivElement>} className="fixed w-full top-44 bottom-0">
       <Scroll className="h-full overflow-hidden">
         <div>
           <div className="relative w-full h-0 pt-4/10 overflow-hidden">

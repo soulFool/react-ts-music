@@ -1,4 +1,5 @@
 import type { ISingerGroupItem } from "@/service/type";
+import type { RefObject } from "react";
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useRequest } from "ahooks";
@@ -22,7 +23,7 @@ const Singer = () => {
   }
 
   return (
-    <div ref={loadingRef} className="fixed w-full top-44 bottom-0">
+    <div ref={loadingRef as RefObject<HTMLDivElement>} className="fixed w-full top-44 bottom-0">
       {singerList?.singers?.length && <IndexList data={singerList.singers} onSelect={selectSinger} />}
       <Outlet context={{singer: currentSinger}} />
     </div>
